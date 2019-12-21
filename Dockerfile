@@ -7,6 +7,7 @@ RUN echo 'ZONE="Asia/Tokyo"' > /etc/sysconfig/clock \
       && yes | cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 RUN localedef -i ja_JP -c -f UTF-8 -A /usr/share/locale/locale.alias ja_JP.UTF-8
 ENV LC_ALL ja_JP.UTF-8
+ENV LANG ja_JP.UTF-8
 
 RUN yum -y install \
         epel-release \
