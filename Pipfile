@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+markdown-include = "*"
+mkdocs = "*"
+mkdocs-basic-theme = "*"
+mkdocs-bootswatch = "*"
+mkdocs-material = "*"
+pymdown-extensions = "*"
+requests = "*"
+Markdown = "*"
+PyYAML = "*"
+mdx_outline = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
