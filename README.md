@@ -58,7 +58,7 @@ docker run --rm -v $(pwd):/mnt ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf
 
 # in GitLab CI
 
-example of .gitlab-ci.yml is below.
+example of `.gitlab-ci.yml` is below.
 
 ```yaml
 stages:
@@ -74,4 +74,42 @@ release:
     paths:
       - draft.pdf
       - draft-html.zip
+```
+
+# in GitHub Actions
+
+example of `.github/workflows/build.yml` is below.
+
+```yaml
+name: Build document
+
+on:
+  push:
+    branches:
+      - "*"
+
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
+
+  # Run for any PRs.
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build document
+        run: docker run --rm -v $(pwd):/mnt ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf:latest
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: draft-files
+          path: |
+            draft.pdf
+            draft-html.zip
 ```
