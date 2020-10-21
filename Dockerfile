@@ -1,4 +1,4 @@
-FROM centos:7.6.1810
+FROM centos:7.8.2003
 MAINTAINER Toshiaki Baba<toshiaki@netmark.jp>
 
 RUN echo 'ZONE="Asia/Tokyo"' > /etc/sysconfig/clock \
@@ -14,8 +14,8 @@ RUN yum -y install \
         https://centos7.iuscommunity.org/ius-release.rpm \
         && yum clean all
 RUN yum -y install \
-        python36u \
-        python36u-pip \
+        python3 \
+        python3-pip \
         git \
         zip \
         which \
