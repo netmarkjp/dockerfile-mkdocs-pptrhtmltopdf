@@ -1,40 +1,25 @@
-FROM centos:7.8.2003
-MAINTAINER Toshiaki Baba<toshiaki@netmark.jp>
+FROM ghcr.io/netmarkjp/pptrhtmltopdf:latest
+LABEL author="Toshiaki Baba<toshiaki@netmark.jp>"
 
-RUN echo 'ZONE="Asia/Tokyo"' > /etc/sysconfig/clock \
-      && echo 'UTC=false' >> /etc/sysconfig/clock \
-      && yum clean all && yum -y install tzdata && yum clean all \
-      && yes | cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+RUN apt-get -y  -qq update \
+        && apt-get -y install locales tzdata curl \
+        && apt-get -y clean \
+        && rm -rf /var/lib/apt/lists/*
 RUN localedef -i ja_JP -c -f UTF-8 -A /usr/share/locale/locale.alias ja_JP.UTF-8
-ENV LC_ALL ja_JP.UTF-8
 ENV LANG ja_JP.UTF-8
+RUN cp -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-RUN yum -y install \
-        epel-release \
-        https://centos7.iuscommunity.org/ius-release.rpm \
-        && yum clean all
-RUN yum -y install \
-        python3 \
+RUN apt-get update && apt-get install -y \
         python3-pip \
-        git \
+        pipenv \
         zip \
-        which \
-        google-noto-sans-japanese-fonts \
-        && yum clean all
-
-RUN /usr/bin/pip3.6 install --upgrade wheel setuptools
-RUN /usr/bin/pip3.6 install --upgrade pipenv
+        && apt-get clean \
+        && rm -rf /var/lib/apt/lists/*
 
 ENV PIPENV_VENV_IN_PROJECT true
 COPY Pipfile      /root/Pipfile
 COPY Pipfile.lock /root/Pipfile.lock
-RUN cd /root && pipenv --python=/usr/bin/python3.6 sync
-
-RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash - && yum -y install nodejs && yum clean all
-RUN yum -y install chromium-headless gtk3 alsa-lib cups libXScrnSaver && yum -y remove chromium-headless && yum clean all
-RUN mkdir -p /root/pptrhtmltopdf && cd /root/pptrhtmltopdf \
-    && npm install pptrhtmltopdf \
-    && ln -s /root/pptrhtmltopdf/node_modules/.bin/pptrhtmltopdf /usr/local/bin/pptrhtmltopdf
+RUN cd /root && pipenv --python=/usr/bin/python3 sync
 
 ENV PATH "/root/.venv/bin:/usr/local/bin:/usr/bin:$PATH"
 
@@ -43,4 +28,4 @@ COPY build.sh /root/build.sh
 EXPOSE 8000
 
 WORKDIR /mnt
-CMD ["/root/build.sh"]
+ENTRYPOINT ["/root/build.sh"]
