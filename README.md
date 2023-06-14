@@ -1,4 +1,4 @@
-# dockerfile-mkdocs-pptrhtmltopdf
+# mkdocs-pptrhtmltopdf
 
 # Example
 
