@@ -45,13 +45,13 @@ p {
 ## serve
 
 ```bash
-docker run --rm -p 8000:8000 -v $(pwd):/mnt --name mkdocs-serve ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf mkdocs serve
+docker run --rm -p 8000:8000 -v $(pwd):/mnt -u $(id -u):$(id -g) --name mkdocs-serve ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf mkdocs serve
 ```
 
 ## build html and pdf
 
 ```bash
-docker run --rm -v $(pwd):/mnt ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf
+docker run --rm -v $(pwd):/mnt -u $(id -u):$(id -g) ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf
 ```
 
 => `draft-html.zip` `draft.pdf` will generate.
