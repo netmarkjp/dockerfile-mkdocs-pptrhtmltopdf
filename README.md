@@ -67,7 +67,9 @@ release:
   stage: release
   tags:
     - docker
-  image: ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf:latest
+  image:
+    name: "ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf:latest"
+    entrypoint: [""]
   script:
     - /opt/mkdocs-pptrhtmltopdf/build.sh
   artifacts:
