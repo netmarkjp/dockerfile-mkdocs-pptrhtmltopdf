@@ -5,7 +5,7 @@ set -e
 BUILD_ROOT="/tmp/build"
 OUTPUT_ROOT="/mnt"
 
-VERSION=$(git log --pretty=format:'Date: %cd, Revision: %h' | head -1)
+VERSION=$(git log --pretty=format:'Date: %cd, Revision: %h' 2>/dev/null || echo "latest" | head -1)
 
 rm -rf ${BUILD_ROOT:?} || :
 mkdir -p ${BUILD_ROOT:?} || :

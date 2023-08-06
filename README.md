@@ -69,7 +69,7 @@ release:
     - docker
   image: ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf:latest
   script:
-    - ./build.sh
+    - /opt/mkdocs-pptrhtmltopdf/build.sh
   artifacts:
     paths:
       - draft.pdf
