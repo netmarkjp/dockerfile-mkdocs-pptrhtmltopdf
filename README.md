@@ -45,7 +45,7 @@ p {
 ## serve
 
 ```bash
-docker run --rm -p 8000:8000 -v $(pwd):/mnt -u $(id -u):$(id -g) --name mkdocs-serve ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf mkdocs serve
+docker run --rm -p 8000:8000 -v $(pwd):/mnt -u $(id -u):$(id -g) --entrypoint mkdocs ghcr.io/netmarkjp/mkdocs-pptrhtmltopdf serve       
 ```
 
 ## build html and pdf
